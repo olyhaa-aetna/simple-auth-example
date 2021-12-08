@@ -1,0 +1,8 @@
+{
+  "baseUrl": "http://localhost:3000/",
+  "lighthouse": {
+    "performance": 85,
+    "accessibility": 50,
+    "best-practices": 85
+  }
+}
