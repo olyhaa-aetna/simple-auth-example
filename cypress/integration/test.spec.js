@@ -12,7 +12,7 @@ describe("Test the first page before login", () => {
 
 describe("Test the second page after login", () => {
   before(() => {
-    cy.unsetAccessToken();
+    cy.setAccessToken();
   });
 
   it("should pass cypress audit", () => {
