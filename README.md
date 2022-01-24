@@ -37,6 +37,29 @@ As a result, while running Lighthouse on the second page (the page requiring aut
 the audit is actually run against the welcome page. This can be seen in the lighthouse report's
 screenshots.
 
+### Session Storage Workaround - Custom Gatherer and Audit
+
+Lighthouse supports adding [custom audits](https://github.com/GoogleChrome/lighthouse/tree/468d92ff7bfca51499787feb56ad9838db7631f8/docs/recipes/custom-audit).
+These custom audits are added to the generated Lighthouse reports and can be based on custom
+metrics gathered from the page via a **gatherer**. These custom gatherers have some lifecycle
+hooks that can be used to read or modify the session/tab where the Lighthouse audit is running.
+
+The one of particular use to us is the `beforePass` hook, which will run **after** the new
+Cypress window is created, but **before** the URL is visited. It is at this point where we can
+modify the `sessionStorage` values before the app is loaded!
+
+See `cypress/support/lighthouse-session-gatherer.js` for the custom gatherer code where we add
+the session storage values. See `cypress/support/lighthouse-session-audit.js` for the custom
+audit that depends on this gatherer.
+
+**Important Implementation Note**: The custom gatherer will **not** be run unless the following
+conditions are met:
+
+1. The gatherer is listed as a `requiredArtifact` in the custom audit file
+2. The gatherer is listed in the lighthouse config
+3. The audit is listed in the lighthouse config
+4. The audit is listed in the lighthouse config categories
+
 ## Available Scripts
 
 In the project directory, you can run:
