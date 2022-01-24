@@ -10,14 +10,26 @@ describe("Test the first page before login", () => {
   });
 });
 
-describe("Test the second page after login", () => {
+describe("Test the second page after login using UI", () => {
+  before(() => {
+    cy.unsetAccessToken();
+  });
+
+  it("should navigate to second page using button", () => {
+    cy.visit("/welcome");
+    cy.login();
+    cy.url().should("contain", "secondPage");
+    cy.lighthouse();
+  });
+});
+
+describe("Test the second page, login using session storage", () => {
   before(() => {
     cy.setAccessToken();
   });
 
   it("should pass cypress audit", () => {
     cy.visit("/welcome");
-    cy.login();
     cy.url().should("contain", "secondPage");
     cy.lighthouse();
   });
