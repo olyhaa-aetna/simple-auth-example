@@ -27,9 +27,12 @@ module.exports = (on, config) => {
     prepareAudit(launchOptions);
   });
 
+  let fileCount = 0;
   on("task", {
     lighthouse: lighthouse((lighthouseReport) => {
+      // Save the Lighthouse report to cypress/test-results
       const outputPath = path.resolve(".", "cypress/test-results");
+      // the fileName should be the name of the page we're auditing
       const fileName = lighthouseReport.artifacts.URL.requestedUrl.substring(
         "http://localhost:3000/".length
       );
@@ -38,7 +41,10 @@ module.exports = (on, config) => {
         lighthouseReport.lhr,
         "html"
       );
-      fs.writeFileSync(`${outputPath}/${fileName}.html`, htmlReport);
+      fs.writeFileSync(
+        `${outputPath}/${++fileCount}-${fileName}.html`,
+        htmlReport
+      );
     }),
   });
   // `config` is the resolved Cypress config

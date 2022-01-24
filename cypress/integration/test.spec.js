@@ -3,7 +3,7 @@ describe("Test the first page before login", () => {
     cy.unsetAccessToken();
   });
 
-  it("welcome page should pass cypress audit", () => {
+  it("welcome page should pass lighthouse audit", () => {
     cy.visit("/welcome");
     cy.get("#welcomePageTitle").should("be.visible");
     cy.lighthouse();
@@ -28,7 +28,7 @@ describe("Test the second page, login using session storage", () => {
     cy.setAccessToken();
   });
 
-  it("should pass cypress audit", () => {
+  it("should pass lighthouse audit", () => {
     cy.visit("/welcome");
     cy.url().should("contain", "secondPage");
     cy.lighthouse();
