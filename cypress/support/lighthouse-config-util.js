@@ -10,6 +10,12 @@ export const LIGHTHOUSE_OPTIONS = {};
 
 export const LIGHTHOUSE_CONFIG = {
   extends: "lighthouse:default",
+  passes: [
+    {
+      passName: "defaultPass",
+      gatherers: ["cypress/support/lighthouse-session-gatherer"],
+    },
+  ],
   audits: ["cypress/support/lighthouse-session-audit"], // our custom (dummy) audit
   categories: {
     "session-init": {
